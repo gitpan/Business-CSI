@@ -1,3 +1,11 @@
+0.26:  Fri Oct 27 16:29:42 EDT 2000
+   - jettero removed the dependancy to Business::CreditCard,
+     since it was kinda broken, and I didn't use it
+
+0.25:  Wed Oct 18 07:26:59 EDT 2000
+   - jettero added the head -1 's ya see in the Makefile.PL,
+     thanx again David.
+
 0.24:  Tue Oct 10 10:57:06 EDT 2000
    - jettero made the Makefile.PL interactive, and also do a
      search to find the CSI LinkPoint API dirs.

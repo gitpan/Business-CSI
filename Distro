@@ -7,6 +7,5 @@ if [ -d ~/www/PerlModules ]; then
     cat CSI.pm | pod2html > ~/www/PerlModules/CSI.html
     rm -vf pod*
     echo don\'t forget to fix the content.html 
-    echo here, I\'ll cd you over there.
 fi
 mv Bu*gz ../archives

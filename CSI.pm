@@ -15,7 +15,7 @@ our @ISA         = qw(Exporter DynaLoader);
 our %EXPORT_TAGS = ( 'all' => [ qw( ) ], 'simple' => [ qw( simple_transaction add_settings ) ] ); 
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} }, @{ $EXPORT_TAGS{'simple'} } );
 our @EXPORT      = qw( );
-our $VERSION     = '0.24';
+our $VERSION     = '0.26';
 
 sub AUTOLOAD {
     my $constname;

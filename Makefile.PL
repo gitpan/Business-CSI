@@ -6,8 +6,8 @@ use ExtUtils::MakeMaker;
 my ($csi_lib, $csi_inc);
 
 if ($ARGV[0] ne "skipme") { # I'll assume you're doing this by hand or something
-    $csi_lib = `dirname \`locate libssl_client.a\``; chomp $csi_lib;
-    $csi_inc = `dirname \`locate  ccapi_client.h\``; chomp $csi_inc;
+    $csi_lib = `dirname \`locate libssl_client.a | head -1\``; chomp $csi_lib;
+    $csi_inc = `dirname \`locate  ccapi_client.h | head -1\``; chomp $csi_inc;
 
     print STDERR "Where's your LinkPoint API library dir [$csi_lib]? "; my $l = <STDIN>; chomp $l;
     print STDERR "Where's your LinkPoint API include dir [$csi_inc]? "; my $i = <STDIN>; chomp $i;
@@ -33,7 +33,7 @@ EOF
 WriteMakefile(
     'NAME'          => 'Business::CSI',
     'VERSION_FROM'  => 'CSI.pm',
-    'PREREQ_PM'     => { "Business::CreditCard", "Time::HiRes" },
+    'PREREQ_PM'     => { "Time::HiRes" },
     'LIBS'          => [''],
     'DEFINE'        => '',
     'INC'           => "-I$csi_inc -I .",
