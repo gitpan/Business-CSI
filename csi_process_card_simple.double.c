@@ -1,6 +1,8 @@
 #include <csi_process_card.h>
 
 char * csi_process_card_simple(
+    OrderCtx *order,
+
     char  * CC_CONFIG_FILE,
     char  * CC_KEY_FILE,
     char  * CC_HOST,
@@ -22,7 +24,6 @@ char * csi_process_card_simple(
 
     int real
 ) {
-    OrderCtx *order;
     ReqCtx *req;
 
     char buff[1024];

@@ -1,7 +1,7 @@
 package Business::CSI;
 # vi:set fdm=marker fdl=0:
 
-require 5.005_62;
+require 5.6.0;
 use strict;
 use warnings;
 use Carp;
@@ -16,7 +16,7 @@ our %EXPORT_TAGS = ( 'all'    => [ qw( :simple :mail ) ],
                      'mail'   => [ qw( customer_notification_mail_settings customer_notification_mail ) ] ); 
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} }, @{ $EXPORT_TAGS{'simple'} }, @{ $EXPORT_TAGS{'mail'} } );
 our @EXPORT      = qw( );
-our $VERSION     = '0.81';
+our $VERSION     = '0.81.1';
 
 # AUTOLOAD  {{{
 sub AUTOLOAD {

@@ -6,8 +6,8 @@ use ExtUtils::MakeMaker;
 my ($csi_lib, $csi_inc);
 
 if ($ARGV[0] ne "skipme") { # I'll assume you're doing this by hand or something
-    $csi_lib = `dirname \`locate libssl_client.a | head -1\``; chomp $csi_lib;
-    $csi_inc = `dirname \`locate  ccapi_client.h | head -1\``; chomp $csi_inc;
+    $csi_lib = `dirname \`locate libssl_client.a | head -1 2>/dev/null\``; chomp $csi_lib;
+    $csi_inc = `dirname \`locate  ccapi_client.h | head -1 2>/dev/null\``; chomp $csi_inc;
 
     print STDERR "Where's your LinkPoint API library dir [$csi_lib]? "; my $l = <STDIN>; chomp $l;
     print STDERR "Where's your LinkPoint API include dir [$csi_inc]? "; my $i = <STDIN>; chomp $i;
