@@ -16,7 +16,7 @@ our %EXPORT_TAGS = ( 'all'    => [ qw( :simple :mail ) ],
                      'mail'   => [ qw( customer_notification_mail_settings customer_notification_mail ) ] ); 
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} }, @{ $EXPORT_TAGS{'simple'} }, @{ $EXPORT_TAGS{'mail'} } );
 our @EXPORT      = qw( );
-our $VERSION     = '0.8';
+our $VERSION     = '0.81';
 
 # AUTOLOAD  {{{
 sub AUTOLOAD {
@@ -139,7 +139,7 @@ sub customer_notification_mail {
                     $smtp->datasend( &summary );
                 } elsif (/ITEMIZED_LIST/) {
                     $smtp->datasend( &itemized_list );
-                } elseif (/EXTRA_TEXT/) {
+                } elsif (/EXTRA_TEXT/) {
                     $smtp->datasend( $cnm_s{extra_text} );
                 } else {
                     $smtp->datasend($_);

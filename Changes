@@ -1,3 +1,6 @@
+0.81:  Wed Feb 28 15:17:01 EST 2001
+   - jettero fixed a typo
+
 0.8:  Wed Feb 28 11:36:21 EST 2001
    - jettero added the extra_text/EXTRA_TEXT mail template
      fields.
