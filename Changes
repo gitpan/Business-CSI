@@ -1,3 +1,20 @@
+0.71:  Wed Nov  1 15:35:16 EST 2000
+   - jettero made some giant changes to the CSI module. In
+     addition to the item support, I've added customer email
+     support... Wooo!  CSI's automajik email sucked
+     really really really badly. ;)
+
+0.3:  Tue Oct 31 08:19:39 EST 2000
+   - jettero have a few more tests to run, but I think this
+     version is stable
+
+0.29:  Mon Oct 30 18:51:26 EST 2000
+   - jettero think I got all the order line item stuff to
+     sorta work ...
+
+0.27:  Mon Oct 30 16:31:04 EST 2000
+   - jettero added line item support.
+
 0.26:  Fri Oct 27 16:29:42 EDT 2000
    - jettero removed the dependancy to Business::CreditCard,
      since it was kinda broken, and I didn't use it

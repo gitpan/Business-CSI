@@ -33,10 +33,10 @@ EOF
 WriteMakefile(
     'NAME'          => 'Business::CSI',
     'VERSION_FROM'  => 'CSI.pm',
-    'PREREQ_PM'     => { "Time::HiRes" },
+    'PREREQ_PM'     => { "Time::HiRes", "Net::DNS", "Net::SMTP" },
     'LIBS'          => [''],
     'DEFINE'        => '',
     'INC'           => "-I$csi_inc -I .",
-    'OBJECT'        => "csi_process_card_simple.o $csi_lib/libssl_client.a CSI.o",
+    'OBJECT'        => "csi_process_card_simple.o CSI.o $csi_lib/libssl_client.a",
     'clean'         => {FILES => "csi_process_card_simple.c"},
 );

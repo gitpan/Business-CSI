@@ -3,9 +3,17 @@
 ./distclean
 perl Makefile.PL skipme && make dist
 if [ -d ~/www/PerlModules ]; then
-    cp Bu*gz ~/www/PerlModules
+    n=`ls Bu*gz`;
     cat CSI.pm | pod2html > ~/www/PerlModules/CSI.html
-    rm -vf pod*
-    echo don\'t forget to fix the content.html 
+    rm -vf pod* ~/www/PerlModules/Bu*gz
+    cp -v Bu*gz ~/www/PerlModules
+cat > ~/www/PerlModules/CSI.b.html << EOF
+<p>
+I have to use Card Service International at work ... 
+This made their API bareable.  The <a href="?eo_cat=CSI.html">Business::CSI module</a> 
+(<a href="$n">$n</a>).
+EOF
 fi
-mv Bu*gz ../archives
+
+mv    -v Bu*gz ../archives
+chmod -v 644 ~/www/PerlModules/CSI.b.html ~/www/PerlModules/Bu*gz

@@ -1,6 +1,8 @@
 #include <csi_process_card.h>
 
 char * csi_process_card_simple(
+    OrderCtx *order,
+
     char  * CC_CONFIG_FILE,
     char  * CC_KEY_FILE,
     char  * CC_HOST,
@@ -22,7 +24,6 @@ char * csi_process_card_simple(
 
     int real
 ) {
-    OrderCtx *order;
     ReqCtx *req;
 
     char buff[1024];
@@ -33,7 +34,6 @@ char * csi_process_card_simple(
 
     float sut=(float)sub_total, tt=(float)tax_total, sht=(float)ship_total, gt=(float)grand_total;
 
-    cc_order_alloc(&order);
     cc_req_alloc(  &req  );
 
     cc_req_set(req, ReqField_Configfile, CC_CONFIG_FILE );

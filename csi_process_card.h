@@ -2,6 +2,8 @@
 #include <ccapi_error.h>
 
 char * csi_process_card_simple(
+    OrderCtx *order,
+
     char  * CC_CONFIG_FILE,
     char  * CC_KEY_FILE,
     char  * CC_HOST,
