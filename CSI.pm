@@ -1,4 +1,5 @@
 package Business::CSI;
+# vi:set fdm=marker fdl=0:
 
 require 5.005_62;
 use strict;
@@ -15,8 +16,9 @@ our %EXPORT_TAGS = ( 'all'    => [ qw( :simple :mail ) ],
                      'mail'   => [ qw( customer_notification_mail_settings customer_notification_mail ) ] ); 
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} }, @{ $EXPORT_TAGS{'simple'} }, @{ $EXPORT_TAGS{'mail'} } );
 our @EXPORT      = qw( );
-our $VERSION     = '0.76';
+our $VERSION     = '0.8';
 
+# AUTOLOAD  {{{
 sub AUTOLOAD {
     my $constname;
     our $AUTOLOAD;
@@ -44,7 +46,9 @@ sub AUTOLOAD {
     }
     goto &$AUTOLOAD;
 }
+# }}}
 
+# globals {{{
 use Time::HiRes qw/ time /;
 use Net::DNS;
 use Net::SMTP;
@@ -72,18 +76,21 @@ my %settings = (  # the defaults
 );
 
 my %cnm_s = (
-    'from'      => "order_processing",
-    'from_full' => "Order Processing Center",
-    'subject'   => "Your order (#X)",
-    'ref'       => "",
-    'template'  => "",
-    'BCC'       => "",
+    'from'       => "order_processing",
+    'from_full'  => "Order Processing Center",
+    'subject'    => "Your order (#X)",
+    'ref'        => "",
+    'template'   => "",
+    'extra_text' => "",
+    'BCC'        => "",
 );
 
 my @items = ();
+# }}}
 
 return 1;
 
+# customer_notification_mail_settings  {{{
 sub customer_notification_mail_settings {
     my $set = shift;
     my $ref = ref($set);
@@ -103,7 +110,9 @@ sub customer_notification_mail_settings {
 
     die "You must pass hashes (not $ref) to the function used in $f at line $l.\nThis was generated";
 }
+# }}}
 
+# customer_notification_mail  {{{
 sub customer_notification_mail {
     my $smtp = &determin_mailer(shift);
 
@@ -126,10 +135,12 @@ sub customer_notification_mail {
         $smtp->datasend("\n\n");
         if(-f $cnm_s{template} and (open IN, "$cnm_s{template}") ) {
             while(<IN>) {
-                if(m/SUMMARY/) {
+                if(/SUMMARY/) {
                     $smtp->datasend( &summary );
-                } elsif (m/ITEMIZED_LIST/) {
+                } elsif (/ITEMIZED_LIST/) {
                     $smtp->datasend( &itemized_list );
+                } elseif (/EXTRA_TEXT/) {
+                    $smtp->datasend( $cnm_s{extra_text} );
                 } else {
                     $smtp->datasend($_);
                 }
@@ -145,59 +156,45 @@ sub customer_notification_mail {
         $smtp->quit;
     }
 }
+# }}}
 
+# itemized_list  {{{
 sub itemized_list {
     my $total  = 0;
     my $string = "";
 
-    $string .= "<pre>\n";
-    $string .= sprintf " %-40s | %10s\n", "Item", "Price (USD)";
-    $string .= "-" x 42 . "+" . "-" x 13 . "\n";
-
     my $i;
-    for( my $i = 0; $i<@items; $i += 2) {
-        $string .= sprintf " %-40s | %11.2f\n", @items[$i..$i+1];
+
+    for($i=0; $i<@items; $i+=2) {
+        $string .= sprintf("%s:\t \$%0.2f\n", @items[$i..$i+1]);
     }
 
-    $string .= "-" x 42 . "+" . "-" x 13 . "\n";
-
-    if($settings{sub_total} or $settings{tax_total} or $settings{ship_total}) {
-        if($settings{sub_total}) {
-            $total   = sprintf "\$%0.2f\n", $settings{sub_total};
-            $total   = " " x (12-length($total)) . "$total";
-            $string .= " " x 30 . "  sub total | $total";
-        }
-
-        if($settings{tax_total}) {
-            $total   = sprintf "\$%0.2f\n", $settings{tax_total};
-            $total   = " " x (12-length($total)) . "$total";
-            $string .= " " x 30 . "  tax total | $total";
-        }
-
-        if($settings{ship_total}) {
-            $total   = sprintf "\$%0.2f\n", $settings{ship_total};
-            $total   = " " x (12-length($total)) . "$total";
-            $string .= " " x 27 . " shipping cost | $total";
-        }
-
-        $string .= "-" x 42 . "+" . "-" x 13 . "\n";
+    if($settings{sub_total}) {
+        $string .= sprintf("sub total:\t \$%0.2f\n", $settings{sub_total});
+    }
+    if($settings{tax_total}) {
+        $string .= sprintf("tax total:\t \$%0.2f\n", $settings{tax_total});
+    }
+    if($settings{ship_total}) {
+        $string .= sprintf("shipping cost:\t \$%0.2f\n", $settings{ship_total});
     }
 
-    $total   = sprintf "\$%0.2f\n", $settings{grand_total};
-    $total   = " " x (12-length($total)) . "$total";
-    $string .= " " x 30 . "grand total | $total";
-    $string .= "</pre>\n";
+    $string .= sprintf("grand total:\t \$%0.2f\n", $settings{grand_total});
 
     return $string;
 }
+# }}}
 
+# summary  {{{
 sub summary {
     my $string = "Your transaction reference number was '$cnm_s{ref}'.\n";
     $string   .= "BTW, this order was only a simulated transaction.\n" if not $settings{real};
 
     return $string;
 }
+# }}}
 
+# determin_mailer  {{{
 sub determin_mailer {
     my $smtp_connection;
 
@@ -221,7 +218,9 @@ sub determin_mailer {
 
     return $smtp_connection;
 }
+# }}}
 
+# add_item  {{{
 sub add_item {
     my ($desc, $amount) = @_;
 
@@ -230,7 +229,9 @@ sub add_item {
 
     push @items, ( @_ );
 }
+# }}}
 
+# calc_total  {{{
 sub calc_total {
     my $i;
     my $total = 0;
@@ -241,13 +242,17 @@ sub calc_total {
 
     return $total;
 }
+# }}}
 
+# clear_settings  {{{
 sub clear_settings {
     foreach my $k (@_) {
         delete $settings{$k};
     }
 }
+# }}}
 
+# add_settings  {{{
 sub add_settings {
     my $set = shift;
     my $ref = ref($set);
@@ -272,7 +277,9 @@ sub add_settings {
 
     die "You must pass hashes (not $ref) to the function used in $f at line $l.\nThis was generated";
 }
+# }}}
 
+# simple_transaction  {{{
 sub simple_transaction {
     &add_settings(@_) if @_ > 0;
 
@@ -325,6 +332,7 @@ sub simple_transaction {
 
     return %result;
 }
+# }}}
 
 __END__
 
@@ -379,8 +387,9 @@ Business::CSI - Perl extension for Card Services International
 
  customer_notification_mail_settings({
      # see the documentation below if you want to use templates.
-     'template' => "filename.txt", 
-     'BCC'      => "sales@our.downtown.com",
+     'template'   => "filename.txt", 
+     'extra_text' => qq( This is some extra text.  Do you like reading it? )
+     'BCC'        => "sales@our.downtown.com",
  });
 
  customer_notification_mail(1); # generally you wouldn't use the 1, see below
@@ -471,6 +480,11 @@ Business::CSI - Perl extension for Card Services International
   use the named template to do the notification.  SUMMARY and ITEMIZED_LIST
   should appear on a line by themselves somewhere in the template.  They
   get replaced appropriately.
+
+  Additionally, the word EXTRA_TEXT will be replaced by the extra_text 
+  setting.  If EXTRA_TEXT is not inthe template, then the extra_text setting is 
+  rendered useless.  Similarly, the EXTRA_TEXT will get replaced with nothing
+  if you dont' set the extra_text field.
 
 =head2 from => "someone", from => "someone@something.tld"
 

@@ -4,6 +4,7 @@
 perl Makefile.PL skipme && make dist
 if [ -d ~/www/PerlModules ]; then
     n=`ls Bu*gz`;
+    date=`date`;
     cat CSI.pm | pod2html > ~/www/PerlModules/CSI.html
     rm -vf pod* ~/www/PerlModules/Bu*gz
     cp -v Bu*gz ~/www/PerlModules
@@ -12,6 +13,7 @@ cat > ~/www/PerlModules/CSI.b.html << EOF
 I have to use Card Service International at work ... 
 This made their API bareable.  The <a href="?eo_cat=CSI.html">Business::CSI module</a> 
 (<a href="$n">$n</a>).
+Last updated on $date.
 EOF
 fi
 

@@ -1,3 +1,19 @@
+0.8:  Wed Feb 28 11:36:21 EST 2001
+   - jettero added the extra_text/EXTRA_TEXT mail template
+     fields.
+
+0.79:  Wed Feb 28 11:28:08 EST 2001
+   - jettero folded the .pm (non vi users will be
+     irritated).
+
+0.78:  Fri Nov  3 16:48:06 EST 2000
+   - jettero took the box formatting outta itemized_list ...
+     it was broken under windows ...
+
+0.77:  Fri Nov  3 16:17:30 EST 2000
+   - jettero took the pre tags out... they didn't work
+     anyway
+
 0.76:  Fri Nov  3 15:18:26 EST 2000
    - jettero added <pre></pre> tags to the inventory
      displayer thing, cuz it looked really stupid in
