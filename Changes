@@ -1,0 +1,67 @@
+0.18:  Thu Sep 21 10:28:13 EDT 2000
+   - jettero tested the thing... seems to work great.
+
+0.17:  Thu Sep 21 10:28:06 EDT 2000
+   - jettero got the docs to a happy place
+
+0.16:  Wed Sep 20 17:37:46 EDT 2000
+   - jettero cleaned up the docs alot ...
+
+0.15:  Wed Sep 20 17:22:26 EDT 2000
+   - jettero got some tests to actually work. ;)
+
+0.14:  Wed Sep 20 15:18:47 EDT 2000
+   - jettero installed unique order numbers
+
+0.13:  Mon Sep 18 17:09:23 EDT 2000
+   - jettero think this might sorta work... I have to try
+     this with a real key.
+
+0.12:  Mon Sep 18 16:49:39 EDT 2000
+   - jettero changed the entire return style for the simple
+     transaction
+
+0.11:  Mon Sep 18 16:36:24 EDT 2000
+   - jettero did some debugging and features upgrades
+
+0.1:  Sun Sep 17 20:48:38 EDT 2000
+   - jettero did a whole bunch of typing.... nothing works
+     yet though
+
+0.06:  Sun Sep 17 19:04:37 EDT 2000
+   - jettero got it to test OK
+
+0.05:  Sun Sep 17 19:04:31 EDT 2000
+   - jettero got it to link
+
+0.04:  Sun Sep 17 19:04:26 EDT 2000
+   - jettero got it to compile
+
+0.03:  Sun Sep 17 18:50:34 EDT 2000
+   - jettero figured out the bootstrap problem _again_ (see
+     the JDockApp Changes ... and below)
+
+0.02:  Sun Sep 17 18:37:19 EDT 2000
+   - jettero rebuilt the XS stuff
+   - The correct solution would have been to put CSI.o in
+     the Makefile.PL
+
+0.03:  Sun Sep 17 17:09:40 EDT 2000
+   - jettero got this bitch to compile
+
+0.02:  Sun Sep 17 17:09:36 EDT 2000
+   - jettero installed makeitromscratch manifestbuilder I
+     format.scr examples/ccapi_ordertest.c
+     examples/ordertest.c and csi_process_card_simple.c
+
+Revision history for Perl extension Business::CSI.
+
+0.01  Tue Aug 15 13:11:10 2000
+        - original version; created by h2xs 1.20 with
+          options -n Business::CSI
+          /usr/local/ccs/src/api_client.h
+          /usr/local/ccs/src/ccapi_client.h
+          /usr/local/ccs/src/ccapi_error.h
+          /usr/local/ccs/src/shipping.h
+          /usr/local/ccs/src/tax.h
+
