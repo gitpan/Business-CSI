@@ -1,3 +1,34 @@
+0.24:  Tue Oct 10 10:57:06 EDT 2000
+   - jettero made the Makefile.PL interactive, and also do a
+     search to find the CSI LinkPoint API dirs.
+
+0.23:  Tue Oct 10 10:08:05 EDT 2000
+   - jettero discovered that I really really need to pass in
+     floats, not doubles. Wierd
+
+0.22:  Tue Oct 10 08:17:43 EDT 2000
+   - jettero installed a couple more things in the manpage
+     (pod ... or whatever).
+
+0.21:  Tue Oct 10 08:00:29 EDT 2000
+   - jettero installed a README based on another request by
+     David Deppner. He pointed out that I never mention that
+     you do in fact need the csi LinkPoint API installed on
+     your system.
+
+0.2:  Tue Oct 10 07:58:04 EDT 2000
+   - jettero made 4 changes based on suggestions by "David
+     Deppner" <dave@psyber.com>.  Apparently, the
+     cc_order_set() functions are supposed to take doubles
+     even though the sample app uses floats.  They are in
+     fact (void *)s in the cc_api_client.h.  That suggests
+     that they type cast them any way; but I did make the
+     change since it was causing him trouble.  Thanks a lot
+     David!
+
+0.19:  Thu Sep 21 11:37:40 EDT 2000
+   - jettero made some minor bugfixes and typeo repairs.
+
 0.18:  Thu Sep 21 10:28:13 EDT 2000
    - jettero tested the thing... seems to work great.
 

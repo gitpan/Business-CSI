@@ -1,7 +1,7 @@
 Changes
 CSI.pm
 csi_process_card.h
-csi_process_card_simple.c
+README
 CSI.xs
 distclean
 Distro
@@ -14,3 +14,5 @@ makeitromscratch
 MANIFEST
 manifestbuilder
 test.pl
+csi_process_card_simple.double.c
+csi_process_card_simple.float.c

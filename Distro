@@ -1,5 +1,12 @@
 #!/bin/sh
 
 ./distclean
-perl Makefile.PL && make dist
+perl Makefile.PL skipme && make dist
+if [ -d ~/www/PerlModules ]; then
+    cp Bu*gz ~/www/PerlModules
+    cat CSI.pm | pod2html > ~/www/PerlModules/CSI.html
+    rm -vf pod*
+    echo don\'t forget to fix the content.html 
+    echo here, I\'ll cd you over there.
+fi
 mv Bu*gz ../archives

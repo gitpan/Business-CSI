@@ -1,0 +1,26 @@
+This is actually just a wrapper for the LinkPoint API.  You
+will need to d/l that and install it first.  The Makefile.PL
+contains these lines:
+
+    my $csi     = "/usr/local/csi";
+    my $csi_inc = "$csi/src";
+    my $csi_lib = "$csi/lib";
+
+The simplest way to install Business::CSI is to simply put
+the LinkPoint API /usr/local/csi.  Then you can use 'perl
+-MCPAN -e 'install Business::CSI' without haveing to edit
+the Makefile.PL.
+
+I briefly considered doing an auto search for it, but it
+would have been a total hack.  It may not have worked 100%
+correctly on all systems.  It could therefore distroy the
+universe.  So I elected not to.
+
+--
+
+Someone recently asked my why I didn't use
+Business::OnlinePayment.  I didn't feel like the extreemly
+simple interface I had in mind was completely compatable
+with Bu::OnPa.  Maybe later I will go back and use it.  For
+now, this package is simple to the point of being single
+minded.

@@ -15,7 +15,7 @@ our @ISA         = qw(Exporter DynaLoader);
 our %EXPORT_TAGS = ( 'all' => [ qw( ) ], 'simple' => [ qw( simple_transaction add_settings ) ] ); 
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} }, @{ $EXPORT_TAGS{'simple'} } );
 our @EXPORT      = qw( );
-our $VERSION     = '0.18';
+our $VERSION     = '0.24';
 
 sub AUTOLOAD {
     my $constname;
@@ -57,7 +57,7 @@ my %settings = (  # the defaults
     'csi_host'     => 'secure.linkpt.net',
     'csi_port'     => '1139',
     'cust_id'      => 'imcertainihavenoidea',
-    'order_id'     => ('QCorder' . '.'. time . '.' . $$),
+    'order_id'     => ('order' . '.'. time . '.' . $$),
     'email_addy'   => 'unknown@aol.com',
     'real'         => 0,
 
@@ -159,10 +159,10 @@ use Business::CSI qw/ :simple /;
 my $max_tries = 5;
 
 add_settings({
-    'csi_config'=> '666999'
+    'csi_config'=> '666999',
     'csi_host'  => 'secure.linkpt.net',
     'csi_port'  => '1139',
-    'csi_key'   => '/etc/keyfile.pm',
+    'csi_key'   => '/etc/keyfile.pem',
 });
 
 add_settings({
@@ -196,18 +196,18 @@ foreach my $k (keys %result) {
 
 =head1 Settings
 
-=head2 The available settings
+=head2 Settings:: The available settings
 
     csi_config   csi_key      csi_host     csi_port     cust_id     
     order_id     name_on_card email_addy   card_number  card_expr_m 
     card_expr_y  sub_total    tax_total    ship_total   grand_total  real        
 
-=head2 The defaults
+=head2 Settings:: The defaults
 
     'csi_host'     => 'secure.linkpt.net',
     'csi_port'     => '1139',
     'cust_id'      => 'imcertainihavenoidea',
-    'order_id'     => ('QCorder' . '.'. time . '.' . $$),
+    'order_id'     => ('order' . '.'. time . '.' . $$),
     'email_addy'   => 'unknown@aol.com',
     'real'         => 0,
 
@@ -215,7 +215,7 @@ foreach my $k (keys %result) {
     'sub_total'    => 0,
     'tax_total'    => 0,
 
-=head2 Extra Info
+=head2 Settings:: Extra Info
 
 Unless otherwise listed, they all default to undef.
 Note that 'csi_config' and 'csi_key' are really really needed.
@@ -237,6 +237,22 @@ me code snippits. ;)
 
 4. More documentation.  As people ask me questions, I make 
 more and more less not clear. ;)
+
+=head1 Known Bugs
+
+None... they're fixed
+
+=head1 Unknown Bugs
+
+None AFAIK.
+
+=head1 Credits
+
+"David Deppner" <dave@psyber.com>:
+
+1.  The double/float bugfix mentioned in the Changes log.
+
+2.  Insisted on a README.
 
 =head1 Author
 

@@ -1,5 +1,5 @@
 #!/bin/sh
 
-perl Makefile.PL
+perl Makefile.PL skipme
 make distclean 
 ./manifestbuilder
