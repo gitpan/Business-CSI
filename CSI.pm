@@ -15,7 +15,7 @@ our %EXPORT_TAGS = ( 'all'    => [ qw( :simple :mail ) ],
                      'mail'   => [ qw( customer_notification_mail_settings customer_notification_mail ) ] ); 
 our @EXPORT_OK   = ( @{ $EXPORT_TAGS{'all'} }, @{ $EXPORT_TAGS{'simple'} }, @{ $EXPORT_TAGS{'mail'} } );
 our @EXPORT      = qw( );
-our $VERSION     = '0.71';
+our $VERSION     = '0.76';
 
 sub AUTOLOAD {
     my $constname;
@@ -121,7 +121,7 @@ sub customer_notification_mail {
 
         $smtp->data();
         $smtp->datasend("From:    $cnm_s{from_full} <$cnm_s{from}>\n");
-        $smtp->datasend("To:      $settings{email_addy}\n");
+        $smtp->datasend("To:      $settings{name_on_card} <$settings{email_addy}>\n");
         $smtp->datasend("Subject: $cnm_s{subject}\n\n");
         $smtp->datasend("\n\n");
         if(-f $cnm_s{template} and (open IN, "$cnm_s{template}") ) {
@@ -150,6 +150,7 @@ sub itemized_list {
     my $total  = 0;
     my $string = "";
 
+    $string .= "<pre>\n";
     $string .= sprintf " %-40s | %10s\n", "Item", "Price (USD)";
     $string .= "-" x 42 . "+" . "-" x 13 . "\n";
 
@@ -185,12 +186,16 @@ sub itemized_list {
     $total   = sprintf "\$%0.2f\n", $settings{grand_total};
     $total   = " " x (12-length($total)) . "$total";
     $string .= " " x 30 . "grand total | $total";
+    $string .= "</pre>\n";
 
     return $string;
 }
 
 sub summary {
-    return "Your transaction reference number was '$cnm_s{ref}'.\n";
+    my $string = "Your transaction reference number was '$cnm_s{ref}'.\n";
+    $string   .= "BTW, this order was only a simulated transaction.\n" if not $settings{real};
+
+    return $string;
 }
 
 sub determin_mailer {
@@ -204,14 +209,14 @@ sub determin_mailer {
             my $realm = $1;
             my @mx = mx($dns, $realm);
             foreach(@mx) {
-                $smtp_connection = Net::SMTP->new($_->exchange, Hello => "hacker.bitch.net", Timeout => 20, Debug => 1) or next;
+                $smtp_connection = Net::SMTP->new($_->exchange, Hello => "hacker.bitch.net", Timeout => 20, Debug => 0) or next;
                 last;
             }
         }
     }
 
     if(not $smtp_connection) {
-        $smtp_connection = Net::SMTP->new("localhost", Hello => "hacker.bitch.net", Timeout => 20, Debug => 1) or next;
+        $smtp_connection = Net::SMTP->new("localhost", Hello => "hacker.bitch.net", Timeout => 20, Debug => 0);
     }
 
     return $smtp_connection;
@@ -252,6 +257,11 @@ sub add_settings {
     if($ref eq 'HASH') {
         foreach my $k (keys %{ $set }) {
             if($acceptable{$k}) {
+                if($k =~ /card_expr_m/) {
+                    $set->{$k} = sprintf("%02d", $set->{$k});
+                } elsif($k =~ /card_expr_y/) {
+                    $set->{$k} = substr(sprintf("%04d", $set->{$k}), 2);
+                }
                 $settings{$k} = $set->{$k};
             } else {
                 die "unrecognized option used in $f at line $l.\nThis was generated";
@@ -439,6 +449,7 @@ Business::CSI - Perl extension for Card Services International
   to do it for real. ;)
 
 =head1 Email settings
+
    Note that in order ot use the Email functions, you must put a ':mail' in
    your use line -- as seen in the example.
 

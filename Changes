@@ -1,8 +1,29 @@
+0.76:  Fri Nov  3 15:18:26 EST 2000
+   - jettero added <pre></pre> tags to the inventory
+     displayer thing, cuz it looked really stupid in
+     winblows.
+
+0.75:  Fri Nov  3 13:06:36 EST 2000
+   - jettero added ultra picky date format code. After
+     having experienced some truly evil pickiness from the
+     CSI server.
+
+0.74:  Thu Nov  2 16:42:40 EST 2000
+   - jettero changed some mail settings so the fullname of
+     the customer shows inthe e-mail ... and the smtp is
+     nolonger in debugmode
+
+0.73:  Thu Nov  2 12:17:16 EST 2000
+   - jettero added another line to the summary
+
+0.72:  Thu Nov  2 11:48:15 EST 2000
+   - jettero fixed a typo in the manpage
+
 0.71:  Wed Nov  1 15:35:16 EST 2000
    - jettero made some giant changes to the CSI module. In
      addition to the item support, I've added customer email
-     support... Wooo!  CSI's automajik email sucked
-     really really really badly. ;)
+     support... Wooo!  CSI's automajik email sucked really
+     really really badly. ;)
 
 0.3:  Tue Oct 31 08:19:39 EST 2000
    - jettero have a few more tests to run, but I think this
